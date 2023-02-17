@@ -6,29 +6,31 @@ import { fatchPixabayAPI } from './fatchPixabayAPI';
 
 
 const input = document.querySelector('input#search-box');
-const searchBtn = document.querySelector('button[type="submit"]');
+// const searchBtn = document.querySelector('button[type="submit"]');
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery')
-console.log(gallery);
-
-let page = 0;
-let perPage = 40;
+const loadMoreBtn = document.querySelector('.load-more')
+console.log(loadMoreBtn);
 
 
 searchForm.addEventListener('submit', onSearch);
+loadMoreBtn.addEventListener('click', onLoad);
+
+let page = 1;
+let perPage = 40;
 
 function onSearch(evt) {
     
     evt.preventDefault()
     const searchQuery = evt.currentTarget.elements.searchQuery.value.trim();
-    page = 1;
+    // page = 1;
     console.log(searchQuery)
 
     if (!searchQuery) {
         clearPage();
         return
     }
-    fatchPixabayAPI(searchQuery, page, perPage).then(data => {
+    fatchPixabayAPI(searchQuery, page = 1, perPage).then(data => {
         if (data.hits === 0) {
             Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
                 clearPage();
@@ -37,14 +39,35 @@ function onSearch(evt) {
                 clearPage();
                 createGalleryMarkup(data.hits);
                 Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+                loadMoreBtn.hidden = false;
+                console.log(data)
         }
     }
        )
 }
 
 
-function createGalleryMarkup(data) {
-    const markup = data.map(({
+function onLoad() {
+    searchQuery = input.value.trim();
+    page += 1;
+    fatchPixabayAPI(searchQuery, page, perPage).then(data => {
+
+        createGalleryMarkup(data.hits)
+        gallerySimpleLightbox.refresh();
+
+        let totalPages = data.totalHits / perPage
+        
+        if (page >= totalPages) {
+            loadMoreBtn.hidden = true;
+           Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
+    }
+    })
+    .catch(err => console.log(err))
+}
+
+
+function createGalleryMarkup(pictures) {
+    const markup = pictures.map(({
     webformatURL,
     largeImageURL,
     tags,
