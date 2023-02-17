@@ -6,7 +6,6 @@ import { fatchPixabayAPI } from './fatchPixabayAPI';
 
 
 const input = document.querySelector('input#search-box');
-// const searchBtn = document.querySelector('button[type="submit"]');
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery')
 const loadMoreBtn = document.querySelector('.load-more')
@@ -23,8 +22,7 @@ function onSearch(evt) {
     
     evt.preventDefault()
     const searchQuery = evt.currentTarget.elements.searchQuery.value.trim();
-    // page = 1;
-    console.log(searchQuery)
+
 
     if (!searchQuery) {
         clearPage();
@@ -40,7 +38,7 @@ function onSearch(evt) {
                 createGalleryMarkup(data.hits);
                 Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
                 loadMoreBtn.hidden = false;
-                console.log(data)
+                lightbox.refresh();
         }
     }
        )
@@ -53,14 +51,14 @@ function onLoad() {
     fatchPixabayAPI(searchQuery, page, perPage).then(data => {
 
         createGalleryMarkup(data.hits)
-        gallerySimpleLightbox.refresh();
 
         let totalPages = data.totalHits / perPage
         
         if (page >= totalPages) {
             loadMoreBtn.hidden = true;
            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
-    }
+        }
+             lightbox.refresh();
     })
     .catch(err => console.log(err))
 }
