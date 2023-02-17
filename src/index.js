@@ -10,20 +10,14 @@ const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery')
 const loadMoreBtn = document.querySelector('.load-more')
 
-const lightbox = new SimpleLightbox('.gallery .gallery__link', lightboxOpts);
-const lightboxOpts = {
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  captionDelay: 250,
-};
-
 
 searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onLoad);
 
 let page = 1;
 let perPage = 40;
-loadMoreBtn.hidden = true;
+ loadMoreBtn.hidden = true;
+
 
 function onSearch(evt) {
     
@@ -104,6 +98,14 @@ function createGalleryMarkup(pictures) {
      
      gallery.insertAdjacentHTML('beforeend', markup);
 }
+
+const lightboxOpts = {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+};
+
+const lightbox = new SimpleLightbox('.gallery .gallery__link', lightboxOpts);
 
 function clearPage() {
   gallery.innerHTML = '';
