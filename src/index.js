@@ -45,17 +45,15 @@ function onSearch(evt) {
        )
 }
 
-
 function onLoad() {
-    searchQuery = input.value.trim();
-    console.log(searchQuery)
+   const inputValue = input.value.trim();
     page += 1;
     fatchPixabayAPI(searchQuery, page, perPage).then(data => {
 
         createGalleryMarkup(data.hits)
 
         let totalPages = data.totalHits / perPage
-        
+     
         if (page >= totalPages) {
            loadMoreBtn.hidden = true;
            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
