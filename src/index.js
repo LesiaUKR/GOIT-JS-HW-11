@@ -9,7 +9,6 @@ const input = document.querySelector('input#search-box');
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery')
 const loadMoreBtn = document.querySelector('.load-more')
-console.log(loadMoreBtn);
 
 
 searchForm.addEventListener('submit', onSearch);
@@ -17,12 +16,13 @@ loadMoreBtn.addEventListener('click', onLoad);
 
 let page = 1;
 let perPage = 40;
+loadMoreBtn.hidden = true;
 
 function onSearch(evt) {
     
     evt.preventDefault()
     const searchQuery = evt.currentTarget.elements.searchQuery.value.trim();
-
+ 
 
     if (!searchQuery) {
         clearPage();
@@ -55,7 +55,7 @@ function onLoad() {
         let totalPages = data.totalHits / perPage
         
         if (page >= totalPages) {
-            loadMoreBtn.hidden = true;
+           loadMoreBtn.hidden = true;
            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
         }
              lightbox.refresh();

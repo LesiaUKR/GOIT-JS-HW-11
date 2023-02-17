@@ -108,16 +108,20 @@ body {
     line-height: 1.5;
 }
 .load-more {
-    display: block;
-    text-align: center;
-    height: 35px;
-    margin: 10px auto;
-    padding: 0 25px;
-    background-color: rgb(59, 59, 136);
-    font-weight: 600;
-    color: white;
-    border: 0;
-    border-radius: 4px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    width: 200px;
+    height: 40px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    background-color: rgb(59, 59, 136);
+    color: aliceblue
+}
+
+.load-more:hover {
+    background-color: rgb(134, 134, 189);
 }
