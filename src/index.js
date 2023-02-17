@@ -48,6 +48,7 @@ function onSearch(evt) {
 
 function onLoad() {
     searchQuery = input.value.trim();
+    console.log(searchQuery)
     page += 1;
     fatchPixabayAPI(searchQuery, page, perPage).then(data => {
 
