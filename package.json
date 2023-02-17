@@ -2,10 +2,10 @@
   "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://LesiaUKR.github.io/GOIT-JS-HW-11_1.git",
+  "homepage": "https://LesiaUKR.github.io/GOIT-JS-HW-11_1",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /GOIT-JS-HW-11_1.git/"
+    "build": "parcel build src/*.html --public-url /GOIT-JS-HW-11_1/"
   },
   "repository": {
     "type": "git",
