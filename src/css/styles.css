@@ -12,6 +12,20 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.is-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
 .search-form {
     width: 100%;
     display: flex;
@@ -108,20 +122,27 @@ body {
     line-height: 1.5;
 }
 .load-more {
-    width: 200px;
-    height: 40px;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    display: block;
+    text-align: center;
+    height: 35px;
+    margin: 10px auto;
+    padding: 0 25px;
     background-color: rgb(59, 59, 136);
-    color: aliceblue
+    font-weight: 600;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 }
 
 .load-more:hover {
     background-color: rgb(134, 134, 189);
+}
+
+.finish-text {
+    text-align: center;
+    margin: 10px auto;
+    font-size: 12px;
+    color:rgb(134, 134, 189);
 }

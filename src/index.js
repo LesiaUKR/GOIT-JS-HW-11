@@ -7,60 +7,82 @@ import { fatchPixabayAPI } from './fatchPixabayAPI';
 
 const input = document.querySelector('input#search-box');
 const searchForm = document.querySelector('.search-form');
-const gallery = document.querySelector('.gallery')
-const loadMoreBtn = document.querySelector('.load-more')
+const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more');
+const searchBtn = document.querySelector('button[type="submit"]');
+const finishMessage = document.querySelector('.finish-text');
 
 
 searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.addEventListener('click', onLoad);
 
 let page = 1;
-let perPage = 40;
- loadMoreBtn.hidden = true;
+let perPage = 100;
+
 
 
 function onSearch(evt) {
     
     evt.preventDefault()
     const searchQuery = evt.currentTarget.elements.searchQuery.value.trim();
- 
+    
 
     if (!searchQuery) {
+        Notiflix.Notify.failure('Please enter a search query!');
         clearPage();
         return
     }
-    fatchPixabayAPI(searchQuery, page = 1, perPage).then(data => {
-        if (data.hits === 0) {
-            Notiflix.Notify.info('Sorry, there are no images matching your search query. Please try again.')
+    
+    // loadMoreBtn.hidden = true;
+    // finishMessage.hidden = true;
+
+    fatchPixabayAPI(searchQuery, page = 1, perPage)
+        .then(data => {
+        if (data.hits.length === 0) {
+                Notiflix.Notify.info(
+                    'Sorry, there are no images matching your search query. Please try again.')
                 clearPage();
                 return;
         } else {
                 clearPage();
                 createGalleryMarkup(data.hits);
                 Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-                loadMoreBtn.hidden = false;
+                loadMoreBtn.classList.remove('is-hidden')
                 lightbox.refresh();
-        }
-    }
-       )
+            }
+        if (data.totalHits <= perPage) {
+            loadMoreBtn.classList.add('is-hidden')
+            searchBtn.disabled = true;
+            finishMessage.classList.remove('is-hidden')
+            }
+        })
+        
+        .catch(error => {
+                console.error(error);
+                Notiflix.Notify.failure('Oops! Something went wrong. Please try again later.');
+    }); 
 }
 
 function onLoad() {
-   const searchQuery = input.value.trim();
+    const searchQuery = input.value.trim();
     page += 1;
-    fatchPixabayAPI(searchQuery, page, perPage).then(data => {
+
+    fatchPixabayAPI(searchQuery, page, perPage)
+     .then(data => {
 
         createGalleryMarkup(data.hits)
-
         let totalPages = data.totalHits / perPage
      
         if (page >= totalPages) {
-           loadMoreBtn.hidden = true;
+           loadMoreBtn.classList.add('is-hidden')
            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
         }
              lightbox.refresh();
     })
-    .catch(err => console.log(err))
+     .catch(error => {
+                console.error(error);
+                Notiflix.Notify.failure('Oops! Something went wrong. Please try again later.');
+    })
 }
 
 
