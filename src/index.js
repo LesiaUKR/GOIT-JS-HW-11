@@ -52,7 +52,6 @@ function onSearch(evt) {
             }
         if (data.totalHits <= perPage) {
             loadMoreBtn.classList.add('is-hidden')
-            searchBtn.disabled = true;
             finishMessage.classList.remove('is-hidden')
             }
         })
