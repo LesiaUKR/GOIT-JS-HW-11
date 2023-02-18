@@ -74,7 +74,8 @@ function onLoad() {
         let totalPages = data.totalHits / perPage
      
         if (page >= totalPages) {
-           loadMoreBtn.classList.add('is-hidden')
+            loadMoreBtn.classList.add('is-hidden')
+            finishMessage.classList.remove('is-hidden')
            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.") 
         }
              lightbox.refresh();
