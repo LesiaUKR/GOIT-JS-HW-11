@@ -32,15 +32,13 @@ function onSearch(evt) {
         clearPage();
         return
     }
-    
-    // loadMoreBtn.hidden = true;
-    // finishMessage.hidden = true;
-
+  
     fatchPixabayAPI(searchQuery, page = 1, perPage)
         .then(data => {
         if (data.hits.length === 0) {
                 Notiflix.Notify.info(
                     'Sorry, there are no images matching your search query. Please try again.')
+                loadMoreBtn.classList.add('is-hidden');
                 clearPage();
                 return;
         } else {
